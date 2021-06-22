@@ -9,8 +9,8 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path={'/tasks'} component={TodoList} />
-          <Route path={'/about'} component={About} />
+          <Route path='tasks' component={TodoList} />
+          <Route path='about' component={About} />
         </div>
       </BrowserRouter>
 

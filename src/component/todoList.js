@@ -4,7 +4,7 @@ import Header from './header/header'
 import style from '../App.module.css'
 import AddTasks from './addTasks/add-tasks'
 import TaskOptions from './taskOptions/task-options'
-import { changeStateApi, changeTextApi, createTaskApi, deleteAllTaskApi, deleteTaskApi } from '../api/api';
+import { changeStateApi, changeTextApi, createTaskApi, deleteAllTaskApi, deleteTaskApi, getAllTasks } from '../api/api';
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -19,9 +19,7 @@ class TodoList extends React.Component {
 
   componentDidMount() {
 
-    fetch('/tasks')
-      .then(res => res.json())
-      .then(response => {
+    getAllTasks().then(response => {
         this.setState(prevState => {
           return {
             ...prevState,
@@ -45,7 +43,7 @@ class TodoList extends React.Component {
     })
 
     this.setState(prevState => {
-      let filterArr = prevState.tasks.filter(item => {
+      const filterArr = prevState.tasks.filter(item => {
         return (item.isDone)
       })
       return {
@@ -72,18 +70,31 @@ class TodoList extends React.Component {
   }
 
   addTasks = (task) => {
-    this.setState(prevState => {
-      const newTask = {
-        todo: task,
-        isDone: false
-      }
-      createTaskApi(newTask)
-      return {
-        ...prevState,
-        tasks: prevState.tasks.concat(newTask)
-      }
+    const newTask = {
+          todo: task,
+          isDone: false
+    }
+    createTaskApi(newTask).then(()=> {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          tasks: prevState.tasks.concat(newTask)
+        }
+      })
     })
   }
+    // this.setState(prevState => {
+    //   const newTask = {
+    //     todo: task,
+    //     isDone: false
+    //   }
+    //   createTaskApi(newTask)
+    //   return {
+    //     ...prevState,
+    //     tasks: prevState.tasks.concat(newTask)
+    //   }
+    // })
+  
 
   doneTask = id => {
     this.setState((prevState) => {
@@ -104,16 +115,17 @@ class TodoList extends React.Component {
   }
 
   deleteTask = id => {
-    deleteTaskApi(id)
-    this.setState(prevState => {
-      return {
-        tasks: prevState.tasks.filter(item => item._id !== id)
-      }
+    deleteTaskApi(id).then(() => {
+      this.setState(prevState => {
+        return {
+          tasks: prevState.tasks.filter(item => item._id !== id)
+        }
+      })
     })
   }
 
   getFilteredTasks = () => {
-    if (this.state.filterSlate === false) {
+    if (!this.state.filterSlate) {
       return this.state.tasks
     }
     return this.state.filtredTasks

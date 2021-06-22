@@ -1,10 +1,15 @@
-export const createTaskApi = Tasks => {
+export const getAllTasks = () => {
+    return fetch('/tasks')
+      .then(res => res.json())
+}
+
+export const createTaskApi = tasks => {
     fetch('/', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
         },
-        body: JSON.stringify(Tasks)
+        body: JSON.stringify(tasks)
     })
 }
 export const deleteTaskApi = id => {
@@ -15,13 +20,11 @@ export const deleteTaskApi = id => {
 
 export const deleteAllTaskApi = () => {
     fetch('/delete-all', {
-        method: 'DELETE',
-        body: {}
+        method: 'DELETE'
     })
 }
 
 export const changeTextApi = (id, text) => {
-    debugger
     fetch(`/update-text/${id}`, {
         method: 'PUT',
         headers: {
@@ -29,7 +32,6 @@ export const changeTextApi = (id, text) => {
         },
         body: JSON.stringify({todo: text})
     })
-    debugger
 }
 
 export const changeStateApi = (id, state) => {
