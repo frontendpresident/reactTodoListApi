@@ -1,0 +1,48 @@
+.p {
+  margin: 0;
+  font-size: 1.3em;
+}
+
+.doneP {
+  margin: 0;
+  font-size: 1.3em;
+  text-decoration: line-through;
+}
+
+.wrapper {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  margin: 10px 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid black;
+}
+
+.wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.157);
+}
+
+.done {
+  margin: 10px 0;
+  background-color: rgba(44, 246, 4, 0.61);
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.done:hover{
+  background-color: rgba(44, 246, 4, 0.856);
+}
+
+.deleteBtn {
+  color: red;
+  background-color: transparent;
+  border: none;
+}
