@@ -73,7 +73,7 @@ exports.changeStateTasks = (req, res) => {
 
     TodoList.findById(req.params.id, (err, todo) => {
         if (err) {
-            return res.status(400).json({ message: 'ПРОИЗОШЛА ОШ' })
+            return res.status(400).json({ message: 'Произошла ошибка' })
         }
         todo.isDone = !todo.isDone
 

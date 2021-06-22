@@ -26,7 +26,10 @@ class TodoList extends React.Component {
             tasks: response
           }
         })
-      });
+      })
+      .catch(err => {
+        console.log(`Произошла ошибка: ${err}`)
+      })
   }
 
   allTasksBtn = () => {
@@ -83,6 +86,9 @@ class TodoList extends React.Component {
         }
       })
     })
+    .catch(err => {
+      console.log(`Произошла ошибка: ${err}`)
+    })
   }
   
   doneTask = id => {
@@ -101,11 +107,9 @@ class TodoList extends React.Component {
         }
       })
     })
-    .catch(this.setState(prevState => {
-      return {
-        ...prevState
-      }
-    }))
+    .catch(err => {
+      console.log(`Произошла ошибка: ${err}`)
+    })
   }
 
   deleteTask = id => {
@@ -144,6 +148,9 @@ class TodoList extends React.Component {
         }
       })
     })
+    .catch(err => {
+      console.log(`Произошла ошибка: ${err}`)
+    })
     
   }
 
@@ -155,6 +162,9 @@ class TodoList extends React.Component {
           tasks: []
         }
       })
+    })
+    .catch(err => {
+      console.log(`Произошла ошибка: ${err}`)
     })
     
   }
