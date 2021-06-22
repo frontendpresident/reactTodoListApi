@@ -4,7 +4,7 @@ export const getAllTasks = () => {
 }
 
 export const createTaskApi = tasks => {
-    fetch('/', {
+   return fetch('/', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
@@ -13,19 +13,19 @@ export const createTaskApi = tasks => {
     })
 }
 export const deleteTaskApi = id => {
-    fetch(`/delete/${id}`, {
+   return fetch(`/delete/${id}`, {
         method: 'DELETE'
     })
 } 
 
 export const deleteAllTaskApi = () => {
-    fetch('/delete-all', {
+  return  fetch('/delete-all', {
         method: 'DELETE'
     })
 }
 
 export const changeTextApi = (id, text) => {
-    fetch(`/update-text/${id}`, {
+   return fetch(`/update-text/${id}`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json'
@@ -34,12 +34,8 @@ export const changeTextApi = (id, text) => {
     })
 }
 
-export const changeStateApi = (id, state) => {
-    fetch(`/update-status/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({isDone: state})
+export const changeStateApi = (id) => {
+  return  fetch(`/update-status/${id}`, {
+        method: 'PUT'
     })
 }

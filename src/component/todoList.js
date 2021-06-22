@@ -75,6 +75,7 @@ class TodoList extends React.Component {
           isDone: false
     }
     createTaskApi(newTask).then(()=> {
+      
       this.setState(prevState => {
         return {
           ...prevState,
@@ -83,35 +84,28 @@ class TodoList extends React.Component {
       })
     })
   }
-    // this.setState(prevState => {
-    //   const newTask = {
-    //     todo: task,
-    //     isDone: false
-    //   }
-    //   createTaskApi(newTask)
-    //   return {
-    //     ...prevState,
-    //     tasks: prevState.tasks.concat(newTask)
-    //   }
-    // })
   
-
   doneTask = id => {
-    this.setState((prevState) => {
-      return {
-        tasks: prevState.tasks.map(tasks => {
-          if (tasks._id === id) {
-            const stateTask = !tasks.isDone
-            changeStateApi(id, stateTask)
-            return {
-              ...tasks,
-              isDone: stateTask
+    changeStateApi(id).then(() => {
+      this.setState((prevState) => {
+        return {
+          tasks: prevState.tasks.map(tasks => {
+            if (tasks._id === id) {
+              return {
+                ...tasks,
+                isDone: !tasks.isDone
+              }
             }
-          }
-          return tasks
-        })
-      }
+            return tasks
+          })
+        }
+      })
     })
+    .catch(this.setState(prevState => {
+      return {
+        ...prevState
+      }
+    }))
   }
 
   deleteTask = id => {
@@ -133,32 +127,36 @@ class TodoList extends React.Component {
 
   changeText = (id) => {
     let taskText = prompt('Введите новое название')
-    changeTextApi(id, taskText)
-    this.setState(prevState => {
-      const prevStateMap = prevState.tasks.map(item => {
-        if (item._id === id) {
-          return {
-            ...item,
-            todo: taskText
+    changeTextApi(id, taskText).then(() =>{
+      this.setState(prevState => {
+        const prevStateMap = prevState.tasks.map(item => {
+          if (item._id === id) {
+            return {
+              ...item,
+              todo: taskText
+            }
           }
+          return item
+        })
+        return {
+          ...prevState,
+          tasks: prevStateMap
         }
-        return item
       })
-      return {
-        ...prevState,
-        tasks: prevStateMap
-      }
     })
+    
   }
 
   clearAllTasks = () => {
-    this.setState(prevState => {
-      deleteAllTaskApi(prevState.tasks)
-      return {
-        ...prevState,
-        tasks: []
-      }
+    deleteAllTaskApi(this.state.tasks).then(() => {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          tasks: []
+        }
+      })
     })
+    
   }
 
   render() {

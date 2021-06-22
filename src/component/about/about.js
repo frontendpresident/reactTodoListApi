@@ -9,7 +9,7 @@ const About = (props) => {
                 Запиши в него все свои важные дела, чтобы не забыть.
             </p>
             <h3 className={style.link}>
-                <a href={'/tasks'}>Назад</a>
+                <a href={'/'}>Назад</a>
             </h3>
         </div>
     )

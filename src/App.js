@@ -5,15 +5,13 @@ import TodoList from './component/todoList';
 
 
 class App extends React.Component {
+
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Route path='tasks' component={TodoList} />
-          <Route path='about' component={About} />
-        </div>
+        <Route exact path="/" component={TodoList} />
+        <Route path="/about" component={About} />
       </BrowserRouter>
-
     )
   }
 }

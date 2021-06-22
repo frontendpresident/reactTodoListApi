@@ -54,7 +54,7 @@ exports.delete = (req, res) => {
 
 exports.deleteAll = (req, res) => {
 
-    TodoList.deleteMany(req.body)
+    TodoList.deleteMany({})
         .then(data => {
             res.send({ message: `${data.deleteCounter} задач удалено` })
         })
@@ -66,19 +66,29 @@ exports.deleteAll = (req, res) => {
 }
 
 exports.changeStateTasks = (req, res) => {
+
     if (!req.body) {
         return res.status(400).send({ message: 'Статус выполнения не изменен' })
     }
 
-    TodoList.findOneAndUpdate(req.params.id, { isDone: req.body.isDone }, (err, data) => {
+    TodoList.findById(req.params.id, (err, todo) => {
         if (err) {
-            res.status(500).send({ message: err.message || 'Ошибка обновления состояния задачи' })
+            return res.status(400).json({ message: 'ПРОИЗОШЛА ОШ' })
         }
+        todo.isDone = !todo.isDone
 
-        if (!data) {
-            res.status(404).send({ message: 'Задача не найдена' })
-        }
-        else res.send({ message: 'Статус задачи был изменен', data })
+        todo.save()
+            .then(data => {
+                if (!data) {
+                    return res.status(404).json({ message: 'Задача не найдена' })
+                }
+
+                return res.json({ message: 'Статус задачи обновлен' })
+            })
+            .catch(err => {
+                return res.status(500).json({ message: err.message || 'Ошибка обновления состояния' })
+            })
+
     })
 }
 
